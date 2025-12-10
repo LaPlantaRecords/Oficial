@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>La Planta Records</title>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg:#0d0d0d;
+            --card:#141414;
+            --muted:#d0d0d0;
+            --accent:#c9a84a;
+            --btn:#1a1a1a;
+        }
+
+        *{box-sizing:border-box}
+        body{
+            margin:0;
+            background:var(--bg);
+            color:#e8e8e8;
+            font-family:'Inter',sans-serif;
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+
+        header{
+            padding:60px 20px;
+            text-align:center;
+            background:linear-gradient(180deg,#000,var(--bg));
+            border-bottom:1px solid #222;
+        }
+
+        .logo-img{
+            width:180px;
+            height:180px;
+            object-fit:cover;
+            border-radius:8px;
+            margin-bottom:20px;
+            border:2px solid #444;
+        }
+
+        h1{font-family:'Anton';letter-spacing:2px;font-size:52px;margin:0;color:var(--muted)}
+
+        nav{margin-top:25px}
+        nav a{margin:0 15px;font-weight:600;text-decoration:none;color:var(--muted);transition:color .18s}
+        nav a:hover{color:#fff}
+
+        section{padding:80px 20px;max-width:1050px;margin:auto}
+        h2{font-family:'Anton';text-transform:uppercase;font-size:42px;letter-spacing:1px;margin-bottom:25px;color:var(--muted)}
+
+        .about{background:var(--card);border:1px solid #222;padding:30px;border-radius:10px;line-height:1.6;color:#dcdcdc}
+
+        /* ARTIST CARD */
+        .artist-card{
+            background:var(--card);
+            border:1px solid #222;
+            padding:25px;
+            margin-bottom:35px;
+            border-radius:10px;
+            display:flex;
+            gap:25px;
+            transition:transform .25s,opacity .4s,box-shadow .18s;
+            opacity:0;
+            transform:translateY(18px);
+            align-items:flex-start;
+        }
+        .artist-card.show{opacity:1;transform:translateY(0);box-shadow:0 6px 20px rgba(0,0,0,0.45)}
+        .artist-photo{min-width:180px;height:180px;border-radius:10px;object-fit:cover;border:2px solid #444}
+        .artist-text{flex:1;min-width:200px}
+        .artist-name{font-family:'Anton';font-size:32px;letter-spacing:1px;margin-bottom:8px;color:var(--muted)}
+        .artist-desc{margin-bottom:12px;line-height:1.5;color:#d6d6d6}
+        .artist-genres{margin-bottom:14px;font-size:14px;opacity:.85;color:#cfcfcf}
+
+        /* BUTTON GROUPS */
+        .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 18px 0}
+        .social-btn, .music-btn{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:8px 12px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:600;
+            font-size:14px;
+            color:#e8e8e8;
+            background:var(--btn);
+            border:1px solid #2b2b2b;
+            transition:transform .14s,background .14s,box-shadow .14s;
+        }
+        .social-btn svg, .music-btn svg{width:18px;height:18px;flex:0 0 18px}
+        .social-btn:hover, .music-btn:hover{transform:translateY(-3px);background:#2b2b2b;box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+
+        /* music buttons get subtle accent */
+        .music-btn{border-color:#333;background:linear-gradient(180deg,#171717,#151515)}
+        .music-btn.spotify svg{stroke:#1DB954;fill:#1DB954}
+        .music-btn.apple svg{stroke:#e8e8e8;fill:#e8e8e8}
+        /* PLAYLISTS */
+        .playlist-box{
+            background:var(--card);
+            border:1px solid #222;
+            padding:35px;
+            border-radius:12px;
+            margin-top:20px;
+        }
+
+        .playlist-desc{
+            color:#d4d4d4;
+            opacity:.9;
+            margin-bottom:25px;
+            font-size:15px;
+        }
+
+        .playlist-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:25px;
+        }
+
+        .playlist-card h3{
+            font-family:'Anton';
+            letter-spacing:1px;
+            color:var(--muted);
+            margin-bottom:12px;
+            text-transform:uppercase;
+            font-size:26px;
+        }
+
+        @media(max-width:800px){
+            .playlist-grid{
+                grid-template-columns:1fr;
+            }
+        }
+
+        /* small responsive */
+        @media (max-width:800px){
+            .artist-card{flex-direction:column;align-items:center;text-align:center}
+            .artist-photo{width:220px;height:220px}
+            .artist-text{width:100%}
+            nav a{display:inline-block;margin:8px}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img class="logo-img" src="https://i.postimg.cc/JtDK9jPs/logo.jpg" alt="Logo La Planta Records">
+    <h1>La Planta Records</h1>
+
+<nav>
+    <a href="#about">Sobre Nosotros</a>
+    <a href="#artistas">Artistas</a>
+    <a href="#playlist">Playlist</a>
+    <a href="#contacto">Contacto</a>
+</nav>
+</header>
+
+<section id="about" data-fade>
+    <h2>Sobre el Sello</h2>
+    <div class="about">
+        La Planta Records es un sello independiente fundado en 2025 en Culiacán, Sinaloa.  
+        Su objetivo es impulsar a nuevos talentos y renovar la identidad del urbano mexicano  
+        con propuestas frescas, experimentación sonora y una visión auténtica de la calle.
+    </div>
+</section>
+
+<section id="artistas">
+    <h2 data-fade>Artistas</h2>
+
+    <!-- KOURI -->
+    <div class="artist-card" data-fade>
+        <img class="artist-photo" src="https://i.postimg.cc/ThLQZnC3/kouri.jpg" alt="Kouri">
+        <div class="artist-text">
+            <div class="artist-name">Kouri</div>
+
+            <div class="row">
+                <!-- Instagram -->
+                <a class="social-btn" href="https://instagram.com/kouri.wav" target="_blank" rel="noopener noreferrer" aria-label="Kouri Instagram">
+                    <!-- camera outline -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+                        <rect x="3" y="4" width="18" height="16" rx="4"></rect>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Instagram
+                </a>
+
+                <!-- TikTok (minimal stylized note) -->
+                <a class="social-btn" href="https://tiktok.com/@kouri.wav" target="_blank" rel="noopener noreferrer" aria-label="Kouri TikTok">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+                        <!-- stylized musical note with curve, simple but recognizable -->
+                        <path d="M16 3v9.5A4.5 4.5 0 1 1 12 8v6"></path>
+                    </svg>
+                    TikTok
+                </a>
+
+                <!-- Spotify -->
+                <a class="music-btn spotify" href="https://open.spotify.com/intl-es/artist/1wAUBEm5XyjgIyftYxdTB2?si=vuUZEn3FSAicOa8lyvQziA" target="_blank" rel="noopener noreferrer" aria-label="Kouri Spotify">
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                        <circle cx="12" cy="12" r="10" fill="#1DB954"></circle>
+                        <path d="M7.5 9.5c4.5-2.5 9.5 0 9.5 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                        <path d="M6.5 12.5c3.8-2.2 8.2 0 8.2 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                        <path d="M6 15c3-1.8 6.4 0 6.4 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                    </svg>
+                    Spotify
+                </a>
+
+                <!-- Apple Music -->
+                <a class="music-btn apple" href="https://music.apple.com/mx/artist/kouri/1814648574" target="_blank" rel="noopener noreferrer" aria-label="Kouri Apple Music">
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                        <!-- minimal apple silhouette -->
+                        <path d="M16.7 10.3c.1-1.2.8-2.1 1.9-2.7-1.1-.8-2.6-1-3.9-.6-.8.2-1.6.7-2.2.7-.6 0-1.4-.6-2.4-.6-1 0-2.4.6-3.1 1.6-1.3 1.7-.3 4.4.9 5.8.6.7 1.4 1.5 2.4 1.4.9-.1 1.3-.6 2.4-.6 1 0 1.4.6 2.4.6 1 0 1.7-.9 2.3-1.6.6-.7.9-1.3 1-1.4-.1-.1-2-1.1-1.8-3.2z" fill="#fff"></path>
+                    </svg>
+                    Apple Music
+                </a>
+            </div>
+
+            <div class="artist-desc">
+                Artista versátil capaz de llevarte del desahogo emocional al flexeo afilado,  
+                moviéndose entre géneros y texturas con naturalidad propia.
+            </div>
+
+            <div class="artist-genres">
+                trap, jersey, reggaetón, jerk, plugg, pluggnb, hoodtrap, afrobeat, hyperpop, glo
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTYY -->
+    <div class="artist-card" data-fade>
+        <img class="artist-photo" src="https://i.postimg.cc/mhzV078Y/ventyy.jpg" alt="Ventyy">
+        <div class="artist-text">
+            <div class="artist-name">Ventyy</div>
+
+            <div class="row">
+                <a class="social-btn" href="https://instagram.com/ventyy.flp" target="_blank" rel="noopener noreferrer" aria-label="Ventyy Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+                        <rect x="3" y="4" width="18" height="16" rx="4"></rect>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Instagram
+                </a>
+
+                <a class="social-btn" href="https://tiktok.com/@venty.flp" target="_blank" rel="noopener noreferrer" aria-label="Ventyy TikTok">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+                        <path d="M16 3v9.5A4.5 4.5 0 1 1 12 8v6"></path>
+                    </svg>
+                    TikTok
+                </a>
+
+                <a class="music-btn spotify" href="https://open.spotify.com/intl-es/artist/7B32dQOxsq0YqMIQuqJyTN?si=mXXD_Vs2Sfeq4_ZrJ_qZZw" target="_blank" rel="noopener noreferrer" aria-label="Ventyy Spotify">
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                        <circle cx="12" cy="12" r="10" fill="#1DB954"></circle>
+                        <path d="M7.5 9.5c4.5-2.5 9.5 0 9.5 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                        <path d="M6.5 12.5c3.8-2.2 8.2 0 8.2 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                        <path d="M6 15c3-1.8 6.4 0 6.4 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                    </svg>
+                    Spotify
+                </a>
+
+                <a class="music-btn apple" href="https://music.apple.com/mx/artist/ventyy/1793205594" target="_blank" rel="noopener noreferrer" aria-label="Ventyy Apple Music">
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                        <path d="M16.7 10.3c.1-1.2.8-2.1 1.9-2.7-1.1-.8-2.6-1-3.9-.6-.8.2-1.6.7-2.2.7-.6 0-1.4-.6-2.4-.6-1 0-2.4.6-3.1 1.6-1.3 1.7-.3 4.4.9 5.8.6.7 1.4 1.5 2.4 1.4.9-.1 1.3-.6 2.4-.6 1 0 1.4.6 2.4.6 1 0 1.7-.9 2.3-1.6.6-.7.9-1.3 1-1.4-.1-.1-2-1.1-1.8-3.2z" fill="#fff"></path>
+                    </svg>
+                    Apple Music
+                </a>
+            </div>
+
+            <div class="artist-desc">
+                Productor, beatmaker y artista con un arsenal de maquetas listas para explotar.  
+                Un sonido en construcción permanente.
+            </div>
+
+            <div class="artist-genres">plugg, glo, trap</div>
+        </div>
+    </div>
+
+    <!-- L1lD0na -->
+    <div class="artist-card" data-fade>
+        <img class="artist-photo" src="https://i.postimg.cc/XXGxT9QC/l1ld0na.jpg" alt="L1lD0na">
+        <div class="artist-text">
+            <div class="artist-name">L1lD0na</div>
+
+            <div class="row">
+                <a class="social-btn" href="https://instagram.com/l1ld0na" target="_blank" rel="noopener noreferrer" aria-label="L1lD0na Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+                        <rect x="3" y="4" width="18" height="16" rx="4"></rect>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Instagram
+                </a>
+
+                <a class="music-btn spotify" href="https://open.spotify.com/intl-es/artist/7pXkalC0KWSfryZmzLtJ4m?si=EQICJFSQTyiZBQcoLviXYw" target="_blank" rel="noopener noreferrer" aria-label="L1lD0na Spotify">
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                        <circle cx="12" cy="12" r="10" fill="#1DB954"></circle>
+                        <path d="M7.5 9.5c4.5-2.5 9.5 0 9.5 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                        <path d="M6.5 12.5c3.8-2.2 8.2 0 8.2 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                        <path d="M6 15c3-1.8 6.4 0 6.4 0" stroke="#05200a" stroke-width="1.4" stroke-linecap="round" fill="none"></path>
+                    </svg>
+                    Spotify
+                </a>
+
+                <a class="music-btn apple" href="https://music.apple.com/mx/artist/l1ld0na/1856268712" target="_blank" rel="noopener noreferrer" aria-label="L1lD0na Apple Music">
+                    <svg viewBox="0 0 24 24" aria-hidden>
+                        <path d="M16.7 10.3c.1-1.2.8-2.1 1.9-2.7-1.1-.8-2.6-1-3.9-.6-.8.2-1.6.7-2.2.7-.6 0-1.4-.6-2.4-.6-1 0-2.4.6-3.1 1.6-1.3 1.7-.3 4.4.9 5.8.6.7 1.4 1.5 2.4 1.4.9-.1 1.3-.6 2.4-.6 1 0 1.4.6 2.4.6 1 0 1.7-.9 2.3-1.6.6-.7.9-1.3 1-1.4-.1-.1-2-1.1-1.8-3.2z" fill="#fff"></path>
+                    </svg>
+                    Apple Music
+                </a>
+            </div>
+
+            <div class="artist-desc">
+                Nuevo integrante del sello. Parte de “Esquirla”, ahora explorando su faceta solista  
+                desde el plugg y con mirada abierta a nuevos sonidos.
+            </div>
+
+            <div class="artist-genres">plugg, hyperpop</div>
+        </div>
+    </div>
+</section>
+
+<!-- PLAYLISTS -->
+<section id="playlist" data-fade>
+    <h2>Playlist Oficial</h2>
+
+    <div class="playlist-box">
+        <p class="playlist-desc">
+            Lo más nuevo, fresco y venenoso de la casa.  
+            Actualizado cada semana con los lanzamientos de La Planta.
+        </p>
+
+        <div class="playlist-grid">
+
+            <!-- APPLE MUSIC -->
+            <div class="playlist-card">
+                <h3>Apple Music</h3>
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                    frameborder="0" height="450"
+                    style="width:100%;border-radius:12px;"
+                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                    src="https://embed.music.apple.com/mx/playlist/la-planta-playlist/pl.u-pMyl1KlIWa9yW98">
+                </iframe>
+            </div>
+
+            <!-- SPOTIFY -->
+            <div class="playlist-card">
+                <h3>Spotify</h3>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2PqhQW07eoGYL5L4cj40NI?utm_source=generator"
+                    width="100%" height="450" frameborder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy">
+                </iframe>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="contacto" data-fade>
+    <h2>Contacto</h2>
+    <div class="about">
+        Para colaboraciones, envíos de demos o consultas:  
+        <br><br>
+        Instagram: <strong>@laplanta247</strong><br>
+        Correo: <strong>laplantarecords.contacto@gmail.com</strong>
+    </div>
+</section>
+
+<footer>
+    © 2025 La Planta Records — Culiacán, Sinaloa, México
+</footer>
+
+<script>
+    // Intersection reveal for cards + fade elements
+    const cards = document.querySelectorAll('.artist-card');
+    const fades = document.querySelectorAll('[data-fade]');
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('show');
+            }
+        });
+    }, {threshold: 0.18});
+
+    cards.forEach(c => obs.observe(c));
+    fades.forEach(f => obs.observe(f));
+</script>
+</body>
+</html>

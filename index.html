@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>La Planta Records</title>
+
     <link rel="icon" href="https://i.postimg.cc/gc45LDhH/logo.jpg" type="image/jpeg">
+
 
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -142,6 +144,74 @@
             .artist-photo{width:220px;height:220px}
             .artist-text{width:100%}
             nav a{display:inline-block;margin:8px}
+
+        /* Ajustes para pantallas móviles */
+@media (max-width: 768px) {
+
+    header {
+        padding: 40px 15px;
+    }
+
+    .logo-img {
+        width: 130px;
+        height: 130px;
+    }
+
+    h1 {
+        font-size: 34px;
+    }
+
+    nav a {
+        margin: 0 10px;
+        font-size: 14px;
+    }
+
+    section {
+        padding: 50px 18px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    .artist-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .artist-photo {
+        min-width: 130px;
+        height: 130px;
+    }
+
+    .artist-name {
+        font-size: 26px;
+    }
+
+    .artist-desc {
+        font-size: 14px;
+    }
+
+    .artist-genres {
+        font-size: 12px;
+    }
+
+    .social-btn {
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+
+    .social-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    iframe {
+        height: 260px;
+    }
+}
         }
     </style>
 </head>
@@ -389,4 +459,3 @@
 </script>
 </body>
 </html>
-
